@@ -1,4 +1,4 @@
-package penakelex.bicycleCharts.grafics.UI;
+package penakelex.bicycleCharts.grafics.UI.Fragments;
 
 import static penakelex.bicycleCharts.grafics.Constants.Main_Container_ID;
 
@@ -6,19 +6,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Objects;
-
-import penakelex.bicycleCharts.grafics.Databases.FragmentsDatabase.FragmentDatabaseHelper;
-import penakelex.bicycleCharts.grafics.R;
+import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
 import penakelex.bicycleCharts.grafics.databinding.FragmentStartingBinding;
 
-public class StartingFragment extends Fragment {
+public class StartingFragment extends MainFragmentsParent {
     private FragmentStartingBinding binding;
 
     @Override
@@ -31,13 +27,13 @@ public class StartingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentDatabaseHelper.addNewFragment((byte) 0, requireActivity().getApplicationContext());
+        addNewFragment((byte) 0);
         binding.start.setOnClickListener(listener -> settingChartsFragment());
-        binding.history.setOnClickListener(listener -> settingHistory());
+        binding.history.setOnClickListener(listener -> settingFunctionsFragment());
     }
 
-    private void settingHistory() {
-        requireActivity().getSupportFragmentManager().beginTransaction().replace(Main_Container_ID, new HistoryFragment()).commit();
+    private void settingFunctionsFragment() {
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(Main_Container_ID, new FunctionsFragment()).commit();
     }
 
     private void settingChartsFragment() {

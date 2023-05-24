@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".UI.Fragments.Functions.FunctionsFragment">
+
+    <include layout="@layout/toolbar" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationViewForFunctions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemTextColor="@color/light_green"
+        app:menu="@menu/functions_menu" />
+
+    <LinearLayout
+        android:id="@+id/containerForHistoryFragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+</LinearLayout>

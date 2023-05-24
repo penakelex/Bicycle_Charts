@@ -1,4 +1,4 @@
-package penakelex.bicycleCharts.grafics.UI;
+package penakelex.bicycleCharts.grafics.UI.Fragments.Functions.HistoryFragments;
 
 import android.os.Bundle;
 
@@ -10,15 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import penakelex.bicycleCharts.grafics.Databases.FragmentsDatabase.FragmentDatabaseHelper;
-import penakelex.bicycleCharts.grafics.R;
 import penakelex.bicycleCharts.grafics.databinding.FragmentHistoryBinding;
+
 
 public class HistoryFragment extends Fragment {
     private FragmentHistoryBinding binding;
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHistoryBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -27,6 +25,5 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentDatabaseHelper.addNewFragment((byte) 1, requireActivity().getApplicationContext());
     }
 }

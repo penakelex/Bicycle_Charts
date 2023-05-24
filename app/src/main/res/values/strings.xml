@@ -4,5 +4,7 @@
     <string name="by_penakelex">by penakelex</string>
     <string name="grafics_calculator">Графический калькулятор</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragmentEntity</string>
+    <string name="history">История</string>
+    <string name="favourite">Избранное</string>
 </resources>

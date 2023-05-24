@@ -5,8 +5,16 @@ import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
-import penakelex.bicycleCharts.grafics.FragmentsAccounting;
+import java.util.List;
+
+import penakelex.bicycleCharts.grafics.Database.FragmentsTable.FragmentEntity;
+import penakelex.bicycleCharts.grafics.UI.Fragments.ChartsFragment;
+import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
+import penakelex.bicycleCharts.grafics.UI.Fragments.StartingFragment;
+import penakelex.bicycleCharts.grafics.ViewModel.Fragments.FragmentsViewModel;
 import penakelex.bicycleCharts.grafics.databinding.ActivityMainBinding;
 
 public class MainActivity extends FragmentActivity {
@@ -22,20 +30,35 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentsAccounting accounting = new FragmentsAccounting();
-        accounting.setFragments(getApplicationContext());
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        switch (accounting.getLastFragment()) {
-            case 0:
-                transaction.replace(binding.mainContainer.getId(), new StartingFragment()).commit();
-                break;
-            case 1:
-                transaction.replace(binding.mainContainer.getId(), new HistoryFragment()).commit();
-                break;
-            case 2:
-                transaction.replace(binding.mainContainer.getId(), new ChartsFragment()).commit();
-            default:
-                finishAffinity();
-        }
+        FragmentsViewModel viewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
+        viewModel.initiate(getApplication());
+        LiveData<List<FragmentEntity>> liveData = viewModel.getAllFragments();
+        liveData.observe(this, fragmentEntities -> {
+            liveData.removeObservers(MainActivity.this);
+            byte fragment;
+            int size = fragmentEntities.size();
+            if (size >= 2) fragment = fragmentEntities.get(size - 2).getID();
+            else if (size == 1) fragment = fragmentEntities.get(0).getID();
+            else fragment = -1;
+            if (size >= 1) {
+                if (fragmentEntities.get(size - 1).getID() == 0) fragment = -1;
+            }
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            switch (fragment) {
+                case 0:
+                    transaction.replace(binding.mainContainer.getId(), new StartingFragment()).commit();
+                    break;
+                case 1:
+                    transaction.replace(binding.mainContainer.getId(), new FunctionsFragment()).commit();
+                    break;
+                case 2:
+                    transaction.replace(binding.mainContainer.getId(), new ChartsFragment()).commit();
+                    break;
+                default:
+                    viewModel.deleteAll();
+                    finish();
+                    break;
+            }
+        });
     }
 }
