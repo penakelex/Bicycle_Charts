@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import penakelex.bicycleCharts.grafics.UI.Fragments.Charts.ChartsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
 import penakelex.bicycleCharts.grafics.databinding.FragmentStartingBinding;
 

@@ -1,14 +1,19 @@
-package penakelex.bicycleCharts.grafics.UI.Fragments;
+package penakelex.bicycleCharts.grafics.UI.Fragments.Charts;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import penakelex.bicycleCharts.grafics.UI.Fragments.MainFragmentsParent;
+import penakelex.bicycleCharts.grafics.UI.MainActivity;
 import penakelex.bicycleCharts.grafics.databinding.FragmentChartsBinding;
 
 public class ChartsFragment extends MainFragmentsParent {
@@ -25,5 +30,6 @@ public class ChartsFragment extends MainFragmentsParent {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         addNewFragment((byte) 2);
+        requireActivity().getSupportFragmentManager().beginTransaction().replace(binding.containerForCharting.getId(), new ChartingFragment()).commit();
     }
 }

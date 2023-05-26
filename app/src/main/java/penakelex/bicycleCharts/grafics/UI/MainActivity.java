@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 import penakelex.bicycleCharts.grafics.Database.FragmentsTable.FragmentEntity;
-import penakelex.bicycleCharts.grafics.UI.Fragments.ChartsFragment;
+import penakelex.bicycleCharts.grafics.UI.Fragments.Charts.ChartsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.StartingFragment;
 import penakelex.bicycleCharts.grafics.ViewModel.Fragments.FragmentsViewModel;
