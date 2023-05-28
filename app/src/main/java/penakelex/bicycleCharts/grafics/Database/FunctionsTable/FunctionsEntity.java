@@ -1,6 +1,8 @@
 package penakelex.bicycleCharts.grafics.Database.FunctionsTable;
 
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -8,19 +10,25 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity(tableName = "functions_table")
-@TypeConverters({FunctionsEntity.FunctionsConverter.class})
 public class FunctionsEntity {
     @ColumnInfo(name = "primary_id")
     @PrimaryKey(autoGenerate = true)
     private int primaryID;
-    @ColumnInfo(name = "functions")
-    private List<String> functions;
+    @ColumnInfo(name = "first_function")
+    private String firstFunction;
+    @ColumnInfo(name = "second_function")
+    private String secondFunction;
     @ColumnInfo(name = "is_favourite")
     private boolean isFavourite;
+
+    @ColumnInfo(name = "areas")
+    private String areas;
 
     public FunctionsEntity() {
     }
@@ -34,8 +42,10 @@ public class FunctionsEntity {
     }
 
     @Ignore
-    public FunctionsEntity(List<String> functions) {
-        this.functions = functions;
+    public FunctionsEntity(List<String> functions, String areas) {
+        this.firstFunction = functions.get(0);
+        this.secondFunction = functions.get(1);
+        this.areas = areas;
     }
 
     public int getPrimaryID() {
@@ -46,23 +56,27 @@ public class FunctionsEntity {
         this.primaryID = primaryID;
     }
 
-    public List<String> getFunctions() {
-        return functions;
+    public String getAreas() {
+        return areas;
     }
 
-    public void setFunctions(List<String> functions) {
-        this.functions = functions;
+    public void setAreas(String areas) {
+        this.areas = areas;
     }
 
-    public static class FunctionsConverter {
-        @TypeConverter
-        public String fromFunctions(List<String> functions) {
-            return String.join(" ", functions);
-        }
+    public String getFirstFunction() {
+        return firstFunction;
+    }
 
-        @TypeConverter
-        public List<String> toFunctions(String functions) {
-            return Arrays.asList(functions.split(" "));
-        }
+    public void setFirstFunction(String firstFunction) {
+        this.firstFunction = firstFunction;
+    }
+
+    public String getSecondFunction() {
+        return secondFunction;
+    }
+
+    public void setSecondFunction(String secondFunction) {
+        this.secondFunction = secondFunction;
     }
 }

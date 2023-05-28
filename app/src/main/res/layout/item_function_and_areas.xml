@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Метод гения:"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="italic" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20.808678914616937"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

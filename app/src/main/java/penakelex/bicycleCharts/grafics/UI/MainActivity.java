@@ -1,4 +1,3 @@
-
 package penakelex.bicycleCharts.grafics.UI;
 
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import java.util.List;
 import penakelex.bicycleCharts.grafics.Database.FragmentsTable.FragmentEntity;
 import penakelex.bicycleCharts.grafics.R;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Charts.ChartsFragment;
-import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
+import penakelex.bicycleCharts.grafics.UI.Fragments.Charts.ChartsSettingsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.StartingFragment;
 import penakelex.bicycleCharts.grafics.ViewModel.Fragments.FragmentsViewModel;
 import penakelex.bicycleCharts.grafics.databinding.ActivityMainBinding;
@@ -43,20 +42,22 @@ public class MainActivity extends AppCompatActivity {
         LiveData<List<FragmentEntity>> liveData = viewModel.getAllFragments();
         liveData.observe(this, fragmentEntities -> {
             switch (fragmentEntities.get(fragmentEntities.size() - 1).getID()) {
-                case 0:
+                case 0 -> {
                     toolbar.setNavigationIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.menu_icon));
+                    toolbar.setNavigationOnClickListener(listener -> {
+                    });
                     toolbar.setTitle("");
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     toolbar.setTitle(getApplicationContext().getResources().getString(R.string.functions));
                     toolbar.setNavigationIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.arrow_back_icon));
                     toolbar.setNavigationOnClickListener(listener -> onBackPressed());
-                    break;
-                case 2:
+                }
+                case 2, 3 -> {
                     toolbar.setTitle(getApplicationContext().getResources().getString(R.string.charts));
                     toolbar.setNavigationIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.arrow_back_icon));
                     toolbar.setNavigationOnClickListener(listener -> onBackPressed());
-                    break;
+                }
             }
         });
     }
@@ -76,22 +77,21 @@ public class MainActivity extends AppCompatActivity {
             else fragment = -1;
             if (size >= 1) {
                 if (fragmentEntities.get(size - 1).getID() == 0) fragment = -1;
+                if (fragmentEntities.get(size - 2).getID() == 3) fragment = 0;
             }
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             switch (fragment) {
-                case 0:
-                    transaction.replace(binding.mainContainer.getId(), new StartingFragment()).commit();
-                    break;
-                case 1:
-                    transaction.replace(binding.mainContainer.getId(), new FunctionsFragment()).commit();
-                    break;
-                case 2:
-                    transaction.replace(binding.mainContainer.getId(), new ChartsFragment()).commit();
-                    break;
-                default:
+                case 0 ->
+                        transaction.replace(binding.mainContainer.getId(), new StartingFragment()).commit();
+                //case 1 -> transaction.replace(binding.mainContainer.getId(), new FunctionsFragment()).commit();
+                case 2 ->
+                        transaction.replace(binding.mainContainer.getId(), new ChartsFragment()).commit();
+                case 3 ->
+                        transaction.replace(binding.mainContainer.getId(), new ChartsSettingsFragment()).commit();
+                default -> {
                     viewModel.deleteAll();
                     finish();
-                    break;
+                }
             }
         });
     }

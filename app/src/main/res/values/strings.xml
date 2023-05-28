@@ -8,4 +8,17 @@
     <string name="favourite">Избранное</string>
     <string name="charts">Графики</string>
     <string name="functions">Функции</string>
+    <string name="areas">Площади</string>
+    <string name="left_rectangles_method">Метод левых прямоугольников</string>
+    <string name="middle_rectangles_method">Метод средних прямоугольников</string>
+    <string name="right_rectangles_method">Метод правых прямоугольников</string>
+    <string name="trapezoid_method">Метод трапеций</string>
+    <string name="first_function">Первая функция:</string>
+    <string name="input_function">Введите функцию</string>
+    <string name="second_function">Вторая функция:</string>
+    <string name="step">Единичный отрезок:</string>
+    <string name="input_step">Введите единичный отрезок</string>
+    <string name="loading">Загрузка...</string>
+    <string name="make">Построить</string>
+    <string name="fill_all">Заполните все поля!</string>
 </resources>

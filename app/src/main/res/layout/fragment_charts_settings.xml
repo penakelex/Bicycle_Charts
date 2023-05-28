@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".UI.Fragments.Charts.ChartsSettingsFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/first_function"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/firstFunction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_function"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/second_function"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/second_function"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_function"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/step"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/step"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_step"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/make"
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:text="@string/make"
+        android:textAllCaps="false"
+        android:textColor="@color/light_green"
+        android:textSize="24sp" />
+</LinearLayout>

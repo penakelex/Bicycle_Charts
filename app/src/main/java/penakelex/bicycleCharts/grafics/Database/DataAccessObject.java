@@ -54,4 +54,10 @@ public interface DataAccessObject {
     //Данных на выходе нет
     @Query("DELETE FROM functions_table")
     void deleteAllFromFunctionsTable();
+
+    @Query("DELETE FROM functions_table WHERE first_function = :firstFunction AND second_function = :secondFunction")
+    void deleteOldVersion(String firstFunction, String secondFunction);
+
+    @Query("UPDATE functions_table SET areas = :areas WHERE first_function = :firstFunction AND second_function = :secondFunction")
+    void updateAreas(String areas, String firstFunction, String secondFunction);
 }

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 import penakelex.bicycleCharts.grafics.Database.FragmentsTable.FragmentEntity;
 import penakelex.bicycleCharts.grafics.Database.FunctionsTable.FunctionsEntity;
 
-@androidx.room.Database(entities = {FragmentEntity.class, FunctionsEntity.class}, version = 5)
+@androidx.room.Database(entities = {FragmentEntity.class, FunctionsEntity.class}, version = 8)
 public abstract class Database extends RoomDatabase {
     private static Database database;
 

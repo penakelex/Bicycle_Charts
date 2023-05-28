@@ -1,11 +1,22 @@
 package penakelex.bicycleCharts.grafics.Charts;
 
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import penakelex.bicycleCharts.grafics.Database.FunctionsTable.FunctionsEntity;
+import penakelex.bicycleCharts.grafics.ViewModel.Functions.FunctionsViewModel;
 
 public class ChartsThread extends Thread {
     private final SurfaceHolder surfaceHolder;
@@ -13,15 +24,19 @@ public class ChartsThread extends Thread {
     private final double plusStep;
     private final ArrayList<String> functions;
     private final Area listCoordinates = new Area();
+    private final FunctionsViewModel viewModel;
 
-    public ChartsThread(ArrayList<String> functions, double plusStep, SurfaceHolder surfaceHolder) {
+    public ChartsThread(ArrayList<String> functions, double plusStep, SurfaceHolder surfaceHolder, ViewModelStoreOwner owner, Application application) {
         this.surfaceHolder = surfaceHolder;
         this.plusStep = plusStep;
         this.functions = functions;
+        this.viewModel = new ViewModelProvider(owner).get(FunctionsViewModel.class);
+        viewModel.initiate(application);
     }
 
     @Override
     public void run() {
+        viewModel.deleteOldVersion(functions);
         Canvas canvas = surfaceHolder.lockCanvas();
         setWhiteBackground(canvas);
         makeAxes(canvas);
@@ -31,6 +46,15 @@ public class ChartsThread extends Thread {
         canvas = surfaceHolder.lockCanvas();
         startCharts(canvas);
         surfaceHolder.unlockCanvasAndPost(canvas);
+        updateAreasValues();
+    }
+
+    private void updateAreasValues() {
+        String areas = String.format("%s ", listCoordinates.getLeftRectanglesRuleArea(functions)) +
+                String.format("%s ", listCoordinates.getMiddleRectanglesRuleArea(functions)) +
+                String.format("%s ", listCoordinates.getRightRectanglesRuleArea(functions)) +
+                String.format("%s", listCoordinates.getTrapezoidRuleArea(functions));
+        viewModel.add(new FunctionsEntity(functions, areas));
     }
 
     private void startCharts(Canvas canvas) {
@@ -200,8 +224,9 @@ public class ChartsThread extends Thread {
 }
 
 class Area {
-    public final double INCREMENT = 1E-4;
     private final ArrayList<ArrayList<Coordinates>> listCoordinates;
+    private ArrayList<Double> xArea;
+
     public Area() {
         this.listCoordinates = new ArrayList<>();
     }
@@ -212,7 +237,7 @@ class Area {
 
     public ArrayList<Double> getXArea(Canvas canvas) {
         ArrayList<Coordinates> firstCoordinates = listCoordinates.get(0), secondCoordinates = listCoordinates.get(1);
-        ArrayList<Double> xArea = new ArrayList<>();
+        xArea = new ArrayList<>();
         int start = -1, end = -1;
         for (int i = 0; i < firstCoordinates.size(); i++) {
             if (Math.abs(firstCoordinates.get(i).getY() - secondCoordinates.get(i).getY()) <= 0.001) {
@@ -227,6 +252,48 @@ class Area {
             }
         }
         return (ArrayList<Double>) xArea.clone();
+    }
+
+    public double getLeftRectanglesRuleArea(ArrayList<String> functions) {
+        double area = 0, h = 0.00005, start = xArea.get(0), end = xArea.get(xArea.size() - 1);
+        Expression firstExpression = new Expression(functions.get(0)), secondExpression = new Expression(functions.get(1));
+        for (double x = start; x < end; x += h) {
+            area += firstExpression.getValue(x) - secondExpression.getValue(x);
+        }
+        return Math.abs(area) * h;
+    }
+
+    public double getRightRectanglesRuleArea(ArrayList<String> functions) {
+        double area = 0, h = 0.0001, start = xArea.get(0), end = xArea.get(xArea.size() - 1);
+        Expression firstExpression = new Expression(functions.get(0)), secondExpression = new Expression(functions.get(1));
+        for (double x = start; x < end; x += h) {
+            area += firstExpression.getValue(x + h) - secondExpression.getValue(x + h);
+        }
+        return Math.abs(area) * h;
+    }
+
+    public double getMiddleRectanglesRuleArea(ArrayList<String> functions) {
+        double area = 0, h = 0.00005, start = xArea.get(0), end = xArea.get(xArea.size() - 1);
+        Expression firstExpression = new Expression(functions.get(0)), secondExpression = new Expression(functions.get(1));
+        for (double x = start; x < end; x += h) {
+            area += firstExpression.getValue(x + h / 2) - secondExpression.getValue(x + h / 2);
+        }
+        return Math.abs(area) * h;
+    }
+
+    public double getTrapezoidRuleArea(ArrayList<String> functions) {
+        Expression firstExpression = new Expression(functions.get(0)), secondExpression = new Expression(functions.get(1));
+        double area, h = 0.00005, start = xArea.get(0), end = xArea.get(xArea.size() - 1);
+        area = (firstExpression.getValue(start) - secondExpression.getValue(start) + firstExpression.getValue(end) + secondExpression.getValue(end)) / 2.;
+        for (double x = start + h; x < end; x += h) {
+            area += firstExpression.getValue(x) - secondExpression.getValue(x);
+        }
+        return Math.abs(area) * h;
+    }
+
+    public double getMonteCarloRuleArea(ArrayList<String> functions) {
+        //TODO: Сделать этот метод, но уже после вывода остальной информации на экран.
+        return 0.;
     }
 }
 

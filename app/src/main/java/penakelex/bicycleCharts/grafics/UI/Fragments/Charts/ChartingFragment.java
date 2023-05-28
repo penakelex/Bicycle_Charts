@@ -15,6 +15,16 @@ public class ChartingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return new Charts(requireActivity());
+        return new Charts(requireActivity(), requireActivity(), requireActivity().getApplication(), requireArguments().getString("firstFunction"), requireArguments().getString("secondFunction"), requireArguments().getInt("step"));
+    }
+
+    public static ChartingFragment getChartingFragment(String firstFunction, String secondFunction, int step) {
+        ChartingFragment fragment = new ChartingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("firstFunction", firstFunction);
+        bundle.putString("secondFunction", secondFunction);
+        bundle.putInt("step", step);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 }
