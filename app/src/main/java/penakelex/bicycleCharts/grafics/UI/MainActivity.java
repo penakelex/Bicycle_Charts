@@ -3,7 +3,9 @@ package penakelex.bicycleCharts.grafics.UI;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,26 +13,58 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.List;
 
 import penakelex.bicycleCharts.grafics.Database.FragmentsTable.FragmentEntity;
+import penakelex.bicycleCharts.grafics.R;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Charts.ChartsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.StartingFragment;
 import penakelex.bicycleCharts.grafics.ViewModel.Fragments.FragmentsViewModel;
 import penakelex.bicycleCharts.grafics.databinding.ActivityMainBinding;
+import penakelex.bicycleCharts.grafics.databinding.ToolbarBinding;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    private FragmentsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        ToolbarBinding toolbarBinding = ToolbarBinding.bind(binding.activityToolbar.toolbar);
+        setSupportActionBar(toolbarBinding.toolbar);
         getSupportFragmentManager().beginTransaction().replace(binding.mainContainer.getId(), new StartingFragment()).commit();
+        handlingToolbar(toolbarBinding.toolbar);
+    }
+
+    private void handlingToolbar(Toolbar toolbar) {
+        if (viewModel == null)
+            viewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
+        viewModel.initiate(getApplication());
+        LiveData<List<FragmentEntity>> liveData = viewModel.getAllFragments();
+        liveData.observe(this, fragmentEntities -> {
+            switch (fragmentEntities.get(fragmentEntities.size() - 1).getID()) {
+                case 0:
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.menu_icon));
+                    toolbar.setTitle("");
+                    break;
+                case 1:
+                    toolbar.setTitle(getApplicationContext().getResources().getString(R.string.functions));
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.arrow_back_icon));
+                    toolbar.setNavigationOnClickListener(listener -> onBackPressed());
+                    break;
+                case 2:
+                    toolbar.setTitle(getApplicationContext().getResources().getString(R.string.charts));
+                    toolbar.setNavigationIcon(ContextCompat.getDrawable(getApplicationContext(), R.drawable.arrow_back_icon));
+                    toolbar.setNavigationOnClickListener(listener -> onBackPressed());
+                    break;
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        FragmentsViewModel viewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
+        if (viewModel == null)
+            viewModel = new ViewModelProvider(this).get(FragmentsViewModel.class);
         viewModel.initiate(getApplication());
         LiveData<List<FragmentEntity>> liveData = viewModel.getAllFragments();
         liveData.observe(this, fragmentEntities -> {

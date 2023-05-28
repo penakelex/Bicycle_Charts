@@ -6,6 +6,8 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 public class Charts extends SurfaceView implements SurfaceHolder.Callback {
     private ChartsThread chartsThread;
 
@@ -16,7 +18,10 @@ public class Charts extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
-        chartsThread = new ChartsThread(getHolder());
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("-x^2+3*x+7");
+        arrayList.add("2*x+1");
+        chartsThread = new ChartsThread(arrayList, 2, getHolder());
         chartsThread.start();
     }
 

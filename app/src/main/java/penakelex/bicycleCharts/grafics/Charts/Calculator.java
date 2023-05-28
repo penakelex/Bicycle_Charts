@@ -1,9 +1,12 @@
 package penakelex.bicycleCharts.grafics.Charts;
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 
 public class Calculator {
     private String expression;
+
     public Calculator(String expression) {
         this.expression = expression;
     }
@@ -27,8 +30,12 @@ public class Calculator {
     }
 
     public String multipliedString(String a, String b) {
-        double a1 = Double.parseDouble(a);
-        double b1 = Double.parseDouble(b);
+        double a1 = Double.parseDouble(a), b1;
+        try {
+            b1 = Double.parseDouble(b);
+        } catch (Exception exception) {
+            b1 = Double.parseDouble(b + "1");
+        }
         BigDecimal a2 = BigDecimal.valueOf(a1);
         BigDecimal b2 = BigDecimal.valueOf(b1);
         BigDecimal c2 = a2.multiply(b2);
@@ -36,8 +43,12 @@ public class Calculator {
     }
 
     public String divideString(String a, String b) {
-        double a1 = Double.parseDouble(a);
-        double b1 = Double.parseDouble(b);
+        double a1 = Double.parseDouble(a), b1;
+        try {
+            b1 = Double.parseDouble(b);
+        } catch (Exception exception) {
+            b1 = Double.parseDouble(b + "1");
+        }
         BigDecimal a2 = BigDecimal.valueOf(a1);
         BigDecimal b2 = BigDecimal.valueOf(b1);
         BigDecimal c2 = a2.divide(b2, a2.scale());
@@ -82,6 +93,7 @@ public class Calculator {
                             break;
                     }
                     if (k[i].equals("*")) {
+                        Log.d("dsadad", k[q]);
                         k[i] = multipliedString(k[l], k[q]);
                         k[l] = "p";
                         k[q] = "p";

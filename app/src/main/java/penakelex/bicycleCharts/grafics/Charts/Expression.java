@@ -1,36 +1,35 @@
 package penakelex.bicycleCharts.grafics.Charts;
 
+
+import penakelex.bicycleCharts.grafics.Charts.Parser.Function.Util.Point;
+import penakelex.bicycleCharts.grafics.Charts.Parser.Parser;
+
 public class Expression {
     private final String function;
     private String variable;
 
     public Expression(String function) {
-        this.function = function.replace(" ", "").replace("\n", "");
+        this.function = function;
     }
 
     public double getValue(double variableValue) {
-        Calculator calculator = new Calculator(getExpression(variableValue));
-        return calculator.calculate();
+        Point point = new Point(getVariable(), variableValue);
+        return Parser.eval(function, point).getValue();
     }
 
-    private String getExpression(double x) {
-        StringBuilder expression = new StringBuilder();
-        for (int i = 0; i < function.length(); i++) {
-            if (variable == null) {
+    public String getVariable() {
+        if (variable == null) {
+            for (int i = 0; i < function.length(); i++) {
                 int ID = (int) function.charAt(i);
                 if (((ID >= 65 && ID <= 90) || (ID >= 97 && ID <= 122))) {
-                    expression.append(x);
                     this.variable = String.valueOf(function.charAt(i));
-                    continue;
-                }
-            } else {
-                if (variable.equals(String.valueOf(function.charAt(i)))) {
-                    expression.append(x);
-                    continue;
+                    break;
                 }
             }
-            expression.append(function.charAt(i));
+            if (variable == null) {
+                variable = "x";
+            }
         }
-        return expression.toString();
+        return this.variable;
     }
 }

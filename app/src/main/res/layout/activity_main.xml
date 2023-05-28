@@ -4,8 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mainContainer"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".UI.MainActivity">
 
+    <include
+        android:id="@+id/activity_toolbar"
+        layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/mainContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
 </LinearLayout>

@@ -2,15 +2,19 @@ package penakelex.bicycleCharts.grafics.UI.Fragments;
 
 import static penakelex.bicycleCharts.grafics.Constants.Main_Container_ID;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import penakelex.bicycleCharts.grafics.Charts.Parser.Function.Util.Point;
+import penakelex.bicycleCharts.grafics.Charts.Parser.Parser;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Charts.ChartsFragment;
 import penakelex.bicycleCharts.grafics.UI.Fragments.Functions.FunctionsFragment;
 import penakelex.bicycleCharts.grafics.databinding.FragmentStartingBinding;
