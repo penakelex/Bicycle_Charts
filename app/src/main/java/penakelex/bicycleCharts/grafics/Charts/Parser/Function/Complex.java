@@ -3,69 +3,63 @@ package penakelex.bicycleCharts.grafics.Charts.Parser.Function;
 
 import penakelex.bicycleCharts.grafics.Charts.Parser.Exception.CalculatorException;
 
-/**
- * The Class Complex.
- */
+/**	Complex
+ * */
 public class Complex {
+	private double r; //Действительное
+	private double i; //Мнимое
 
-	/** real. */
-	private double r;
-
-	/** imaginary. */
-	private double i;
-
-	/**
-	 * Complex.
-	 *
-	 * @param r the r
-	 * @param i the i
-	 */
+	/** Complex
+	 * 		Конструктор класса
+	 * 	Вход:
+	 * 		double r,
+	 * 		double i
+	 * */
 	public Complex(final double r, final double i) {
 		this.r = r;
 		this.i = i;
 	}
 
-	/**
-	 * Complex.
-	 */
+	/**	Complex
+	 * 		Пустой конструктор класса
+	 * */
 	public Complex() {
 		r = 0.0;
 		i = 0.0;
 	}
 
-	/**
-	 * Gets the r.
-	 *
-	 * @return the r
-	 */
+	/**	getR - геттер
+	 * 		Получение r
+	 * 	Выход:
+	 * 		double r
+	 * */
 	public double getR() {
 		return r;
 	}
 
-	/**
-	 * Sets the r.
-	 *
-	 * @param r the new r
-	 */
+	/**	setR - сеттер
+	 * 		Установка r
+	 * 	Вход:
+	 * 		double r
+	 * */
 	public void setR(final double r) {
 		this.r = r;
 	}
 
-	/**
-	 * Gets the i.
-	 *
-	 * @return the i
-	 */
+	/**	getI - геттер
+	 * 		Получение i
+	 * 	Выход:
+	 * 		double i
+	 * */
 	public double getI() {
-
 		return i;
 	}
 
-	/**
-	 * Sets the i.
-	 *
-	 * @param i the new i
-	 */
+	/**	setI - сеттер
+	 * 		Установка i
+	 * 	Вход:
+	 * 		double i
+	 * */
 	public void setI(final double i) {
 		this.i = i;
 	}

@@ -21,4 +21,11 @@
     <string name="loading">Загрузка...</string>
     <string name="make">Построить</string>
     <string name="fill_all">Заполните все поля!</string>
+    <string name="language">Язык</string>
+    <string name="app_information">О приложении</string>
+    <string name="navigation_drawer_open">navigation drawer open</string>
+    <string name="navigation_drawer_close">navigation drawer close</string>
+    <string name="russian">Русский</string>
+    <string name="functions_descriptions">Доступные функции:\n1) Возведение в степень - \"^\";\n2) Умножение - \"*\";\n3) Деление - \"/\";\n4) Сложение - \"+\";\n5) Вычитание - \"-\"...</string>
+    <string name="in_development">В разработке...</string>
 </resources>

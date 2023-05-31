@@ -25,15 +25,29 @@ import penakelex.bicycleCharts.grafics.R;
 import penakelex.bicycleCharts.grafics.UI.Adapters.AreasAdapter;
 import penakelex.bicycleCharts.grafics.ViewModel.Functions.FunctionsViewModel;
 
+/** InformationFragment
+ *      Диалоговое окно с информацией о значениях площадей
+ * */
 public class InformationFragment extends DialogFragment {
-    private FunctionsViewModel viewModel;
-    private AreasAdapter adapter;
+    private FunctionsViewModel viewModel; //viewModel для получения данных из базы данных
+    private AreasAdapter adapter; //Адаптер для площадей
 
+    /** onCreateDialog - функция
+     *      Создание диалогового окна
+     *  Вход:
+     *      Bundle savedInstanceState
+     *  Выход:
+     *      Dialog dialog
+     * */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        //Инициализация базы данных
         viewModel = new ViewModelProvider(requireActivity()).get(FunctionsViewModel.class);
+        viewModel.initiate(requireActivity().getApplication());
+        //Получение liveData списка функций
         LiveData<List<FunctionsEntity>> liveData = viewModel.getAllFunctions();
+        //Создание view диалогового окна
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_information, null);
@@ -42,10 +56,11 @@ public class InformationFragment extends DialogFragment {
         AppCompatTextView textView = view.findViewById(R.id.functions);
         adapter = new AreasAdapter(requireActivity());
         recyclerView.setAdapter(adapter);
+        //Установка наблюдателя за изменениями в базе данных
         liveData.observe(requireActivity(), functionsEntities -> {
             if (functionsEntities.size() != 0) {
-                adapter.setAreasInformation(functionsEntities.get(functionsEntities.size() - 1).getAreas());
-                textView.setText(String.format("y=%s\ny=%s", functionsEntities.get(functionsEntities.size() - 1).getFirstFunction(), functionsEntities.get(functionsEntities.size() - 1).getSecondFunction()));
+                adapter.setAreasInformation(functionsEntities.get(0).getAreas());
+                textView.setText(String.format("y=%s\ny=%s", functionsEntities.get(0).getFirstFunction(), functionsEntities.get(0).getSecondFunction()));
             }
         });
         return builder.create();

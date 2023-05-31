@@ -11,53 +11,80 @@ import java.util.List;
 import penakelex.bicycleCharts.grafics.Database.FragmentsTable.FragmentEntity;
 import penakelex.bicycleCharts.grafics.Database.FunctionsTable.FunctionsEntity;
 
+/** DataAccessObject
+ *      Интерфейс с описанием общих методов, которые используются при взаимодействии с базой данных
+ * */
 @Dao
 public interface DataAccessObject {
-    //Получение всех фрагментов из базы данных
-    //Данных на входе нет
-    //Тип данных на выходе: LiveData<List<FragmentEntity>>
+
+    /** getAllFragments - функция
+     *      Получение всех "фрагментов" из базы данных
+     *  Выход:
+     *      LiveData<List<FragmentEntity>> liveData
+     * */
     @Query("SELECT * FROM fragment_table")
     LiveData<List<FragmentEntity>> getAllFragments();
 
-    //Добавление нового фрагмента в базу данных
-    //Данные на входе: FragmentEntity fragmentEntity
-    //Выходных данных нет
+    /** addNewFragment - процедура
+     *      Добавление нового "фрагмента" в базу данных
+     *  Вход:
+     *      FragmentEntity fragmentEntity - "фрагмент"
+     * */
     @Insert
     void addNewFragment(FragmentEntity fragmentEntity);
 
-    //Удаление всех фрагментов из базы данных
-    //Данных на входе нет
-    //Данных на выходе нет
+    /** deleteAllFromFragmentTable - процедура
+     *      Удаление всех "фрагментов из базы данных
+     * */
     @Query("DELETE FROM fragment_table")
     void deleteAllFromFragmentTable();
 
-    //Получение всех функций из базы данных
-    //Данных на входе нет
-    //Тип данных на выходе: LiveData<List<FunctionsEntity>>
+    /** getAllFunctions - функция
+     *      Получение всех "функций" из базы данных
+     *  Выход:
+     *      LiveData<List<FunctionsEntity>> liveData
+     * */
     @Query("SELECT * FROM functions_table")
     LiveData<List<FunctionsEntity>> getAllFunctions();
 
-    //Добавление новой функции в базу данных
-    //Данные на входе: FunctionsEntity functionsEntity
-    //Данных на выходе нет
+    /** addNewFunction - процедура
+     *      Добавление новой функции в базу данных
+     *  Выход:
+     *      FunctionsEntity functionsEntity - "функция"
+     * */
     @Insert
     void addNewFunction(FunctionsEntity functionsEntity);
 
-    //Удаление функции из базы данных
-    //Данные на входе: FunctionsEntity functionsEntity
-    //Данных на выходе нет
+    /** deleteFunction - процедура
+     *      Удаление "функции" из базы данных
+     *  Вход:
+     *      FunctionsEntity functionsEntity - "функция"
+     * */
     @Delete
     void deleteFunction(FunctionsEntity functionsEntity);
 
-    //Удаление всех функций из базы данных
-    //Данных на входе нет
-    //Данных на выходе нет
+    /** deleteAllFromFunctionsTable - процедура
+     *      Удаление всех "функций" из базы данных
+     * */
     @Query("DELETE FROM functions_table")
     void deleteAllFromFunctionsTable();
 
+    /** deleteOldVersion - процедура
+     *      Удаление старой версии "функции"
+     *  Вход:
+     *      String firstFunction - первая функция,
+     *      String secondFunction - вторая функция
+     * */
     @Query("DELETE FROM functions_table WHERE first_function = :firstFunction AND second_function = :secondFunction")
     void deleteOldVersion(String firstFunction, String secondFunction);
 
+    /** updateAreas - процедура
+     *      Обновление значений площадей
+     *  Вход:
+     *      String areas - площади,
+     *      String firstFunction - первая функция,
+     *      String secondFunction - вторая функция
+     * */
     @Query("UPDATE functions_table SET areas = :areas WHERE first_function = :firstFunction AND second_function = :secondFunction")
     void updateAreas(String areas, String firstFunction, String secondFunction);
 }
